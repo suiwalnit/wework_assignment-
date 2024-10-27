@@ -1,0 +1,94 @@
+const wd = require('wd');
+const assert = require('assert');
+
+async function loginToApp() {
+    const driver = wd.promiseChainRemote("http://localhost:4723/wd/hub");
+
+    const caps = {
+        platformName: 'Android',
+        deviceName: 'Redmi 13C',
+        appPackage: 'com.example.wework',
+        appActivity: 'com.example.wework.MainActivity',
+        automationName: 'UiAutomator2'
+    };
+
+    await driver.init(caps);
+    await driver.sleep(5000);
+    
+    try {
+        const allowNotificationButton = await driver.elementById('com.android.permissioncontroller:id/permission_allow_foreground_only_button');
+        await allowNotificationButton.click();
+        console.log('Allowed Notification');
+    } catch (err) {
+        console.log('Notification permission popup not found, continuing...');
+    }
+    await driver.sleep(10000);
+    
+    return driver; // Return the driver to be used in the test cases
+}
+
+async function logoutFromApp(driver) {
+    // Implement any logout steps if necessary
+    await driver.quit(); // Close the app after the test case
+}
+async function scrollRight(driver) {
+    // Get the window size
+    const windowSize = await driver.getWindowSize();
+
+    const startX = Math.round(windowSize.width * 0.8); // Starting X coordinate (80% of width)
+    const startY = Math.round(windowSize.height * 0.5); // Starting Y coordinate (50% of height)
+    const endX = Math.round(windowSize.width * 0.2);   // Ending X coordinate (20% of width)
+    const endY = Math.round(windowSize.height * 0.5);  // Ending Y coordinate (50% of height)
+
+    // Perform the swipe gesture to scroll right
+    await driver.execute('mobile: swipeGesture', {
+        direction: 'right',    // Direction of the swipe
+        startX: startX,        // Starting X coordinate
+        startY: startY,        // Starting Y coordinate
+        endX: endX,            // Ending X coordinate
+        endY: endY,            // Ending Y coordinate
+        duration: 1000,        // Duration of the swipe in milliseconds
+        percent: 0.5           // Percentage of the width of the screen to swipe
+    });
+}
+
+
+async function testCase1() {
+    console.log('Running Test Case 1: Search for a movie');
+    
+    const driver = await loginToApp(); // Login to the app
+
+    // Search for a movie
+    await driver.waitForElementByXPath("//android.widget.ImageView[@package='com.example.wework']", 5000);
+    const searchBar = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.ScrollView/android.widget.ImageView");
+    await searchBar.click();
+    await driver.sleep(3000);
+    await driver.keys('The Substance');
+    await driver.hideKeyboard();
+    await driver.sleep(5000);
+
+    // Additional assertions or actions for test case 1 can be added here
+    console.log('Test Case 1 completed.');
+
+    await logoutFromApp(driver); // Close the app after test case 1
+}
+
+async function testCase2() {
+    console.log('Running Test Case 2: Get Now Playing movies');
+    
+    const driver = await loginToApp(); // Login to the app
+
+    // Wait for the "Now Playing" section to be visible
+    //await driver.waitForElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[5]/android.view.View", 5000);
+    const nowPlayingButton = await driver.elementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[5]/android.view.View");
+    await scrollRight(driver);
+    await logoutFromApp(driver); // Close the app after test case 2
+}
+
+// Main function to run tests
+(async function runTests() {
+   // await testCase1(); // Run Test Case 1
+    await testCase2(); // Run Test Case 2
+})().catch((err) => {
+    console.log(err);
+});
