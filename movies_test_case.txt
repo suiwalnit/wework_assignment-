@@ -1,0 +1,97 @@
+Search Movie Test Cases
+-------------------------------------
+1. Test Case: Search with Proper Characters
+   - Description: Verify that searching for a valid movie title returns the expected results in Now Playing and Top Rated sections.
+   - Expected Result: Movie should be present in the relevant sections.
+
+2. Test Case: Search with Special Characters
+   - Description: Verify that searching with special characters returns 'No results found.' in both sections.
+   - Expected Result: No results found in both Now Playing and Top Rated sections.
+
+3. Test Case: Single Character Search
+   - Description: Test searching for a single character and verify if any results are returned.
+   - Expected Result: Appropriate message indicating if the movie is present or not.
+
+4. Test Case: Random Integer Search
+   - Description: Search for a random integer and check if the result indicates 'No results found.'
+   - Expected Result: No results found in both Now Playing and Top Rated sections.
+
+5. Test Case: Top Rated Movie Search
+   - Description: Search for a well-known movie title and verify its presence in the Now Playing and Top Rated sections.
+   - Expected Result: Movie should be found in the Top Rated section.
+
+Now Playing API Test Cases
+-------------------------------------
+1. Test Case: All Movies Should Return Status 200
+   - Description: Ensure the Now Playing API returns a 200 status for valid requests.
+   - Expected Result: Response status should be 200 and contain results.
+
+2. Test Case: Unauthorized Token
+   - Description: Test the API response for an invalid authorization token.
+   - Expected Result: Response status should be 401 (Unauthorized).
+
+3. Test Case: Invalid POST Request
+   - Description: Attempt a POST request to an invalid endpoint and check the response.
+   - Expected Result: Response status should be 404.
+
+4. Test Case: Invalid Page Number (Negative)
+   - Description: Test API response when a negative page number is used.
+   - Expected Result: Response status should be 400 with appropriate error message.
+
+5. Test Case: Invalid Page Number (Zero or >500)
+   - Description: Test API response when zero or a number greater than 500 is provided as a page number.
+   - Expected Result: Response status should be 400 with appropriate error message.
+
+6. Test Case: Wrong API Endpoint
+   - Description: Request an incorrect API endpoint and validate the response.
+   - Expected Result: Response status should be 404 with an appropriate error message.
+
+7. Test Case: Ensure No Duplicate Movies
+   - Description: Validate that the list of movies returned by the Now Playing API does not contain duplicates.
+   - Expected Result: Movie IDs in the results should be unique.
+
+Top Rated API Test Cases
+-------------------------------------
+1. Test Case: All Movies Should Return Status 200
+   - Description: Ensure the Top Rated API returns a 200 status for valid requests.
+   - Expected Result: Response status should be 200 and contain results.
+
+2. Test Case: Unauthorized Token
+   - Description: Test the API response for an invalid authorization token.
+   - Expected Result: Response status should be 401 (Unauthorized).
+
+3. Test Case: Invalid POST Request
+   - Description: Attempt a POST request to an invalid endpoint and check the response.
+   - Expected Result: Response status should be 404.
+
+4. Test Case: Invalid Page Number (Negative)
+   - Description: Test API response when a negative page number is used.
+   - Expected Result: Response status should be 400 with appropriate error message.
+
+5. Test Case: Invalid Page Number (Zero or >500)
+   - Description: Test API response when zero or a number greater than 500 is provided as a page number.
+   - Expected Result: Response status should be 400 with appropriate error message.
+
+6. Test Case: Wrong API Endpoint
+   - Description: Request an incorrect API endpoint and validate the response.
+   - Expected Result: Response status should be 404 with an appropriate error message.
+
+7. Test Case: Ensure No Duplicate Movies
+   - Description: Validate that the list of movies returned by the Top Rated API does not contain duplicates.
+   - Expected Result: Movie IDs in the results should be unique.
+
+Additional Bugs 
+---------------------------------------
+1. To able to click on (WE)- on top right corner to see the account details.
+
+2. Not getting any response when clicking on 'Explore' and 'Upcoming'.
+
+3. Top Rated movie are not sorted according to ratings.
+
+4. Not able to paste on search bar.
+ 
+5. Not able to update location.
+
+6. Scrolled down no able to go directly on top after clicking on "we Movies" on left botttom.
+
+7. After clicking on top rated movies not able to close it by scrolling down unlike Now playing movies.
